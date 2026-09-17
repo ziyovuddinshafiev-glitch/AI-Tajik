@@ -1,14 +1,18 @@
 workflows:
-  android-workflow:
-    name: Android Build
+  flutter-android:
+    name: Flutter Android Build
     max_build_duration: 60
     instance_type: mac_mini_m1
+    environment:
+      flutter: stable
     scripts:
-      - name: Build Android APK
+      - name: Unpack and Prepare
         script: |
           unzip -o offline_ai_app-3.zip
-          cd offline_ai_app/android
-          chmod +x gradlew
-          ./gradlew assembleRelease
+      - name: Build Flutter APK
+        script: |
+          cd offline_ai_app
+          flutter pub get
+          flutter build apk --release
     artifacts:
-      - offline_ai_app/android/app/build/outputs/**/*.apk
+      - offline_ai_app/build/app/outputs/flutter-apk/*.apk
