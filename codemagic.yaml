@@ -10,8 +10,8 @@ workflows:
         script: |
           unzip -o offline_ai_app-3.zip
           cd offline_ai_app
+          flutter pub add fllama --git-url=https://github.com/nomic-ai/fllama.git || true
           flutter pub get
           flutter build apk --release --no-tree-shake-icons
     artifacts:
       - offline_ai_app/build/app/outputs/flutter-apk/*.apk
-
