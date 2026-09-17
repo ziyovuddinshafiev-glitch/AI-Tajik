@@ -4,9 +4,14 @@ workflows:
     max_build_duration: 60
     instance_type: mac_mini_m1
     scripts:
-      - name: Build Android APK
+      - name: Unpack project and Build APK
         script: |
-          cd android && ./gradlew assembleRelease
+          unzip -o offline_ai_app-3.zip
+          if [ -d "android" ]; then
+            cd android && ./gradlew assembleRelease
+          else
+            find . -maxdepth 2 -name "gradlew" -exec chmod +x {} \;
+            find . -maxdepth 2 -name "gradlew" -execdir ./gradlew assembleRelease \;
+          fi
     artifacts:
-      - android/app/build/outputs/**/*.apk
-
+      - "**/build/outputs/**/*.apk"
