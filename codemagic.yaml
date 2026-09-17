@@ -4,15 +4,17 @@ workflows:
     max_build_duration: 60
     instance_type: mac_mini_m1
     environment:
-      flutter: stable
+      flutter: 3.19.6
     scripts:
-      - name: Unpack and Prepare
+      - name: Unpack and Fix Dependencies
         script: |
           unzip -o offline_ai_app-3.zip
+          cd offline_ai_app
+          sed -i '' 's/fllama: \^0.6.0/fllama: any/g' pubspec.yaml
+          flutter pub get
       - name: Build Flutter APK
         script: |
           cd offline_ai_app
-          flutter pub get
-          flutter build apk --release
+          flutter build apk --release --no-tree-shake-icons
     artifacts:
       - offline_ai_app/build/app/outputs/flutter-apk/*.apk
