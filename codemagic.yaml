@@ -1,12 +1,34 @@
 workflows:
   android-workflow:
     name: Android Build
-    max_build_duration: 60
+    max_build_duration: 120
     environment:
       flutter: stable
       vars:
-        PACKAGE_NAME: "com.example.app"
+        MODEL_URL: "https://huggingface.co/bartowski/gemma-2-2b-it-GGUF/resolve/main/gemma-2-2b-it-Q4_K_M.gguf?download=true"
     scripts:
+      - name: Scaffold Android platform folder (agar набошад)
+        script: |
+          if [ ! -f android/app/build.gradle ]; then
+            cp pubspec.yaml /tmp/pubspec.yaml.bak
+            rm -rf /tmp/lib_bak && cp -r lib /tmp/lib_bak
+            flutter create --platforms=android --org com.example .
+            cp /tmp/pubspec.yaml.bak pubspec.yaml
+            rm -rf lib
+            cp -r /tmp/lib_bak lib
+          fi
+      - name: Илова кардани иҷозатҳо ба AndroidManifest.xml
+        script: |
+          MANIFEST=android/app/src/main/AndroidManifest.xml
+          if ! grep -q "RECORD_AUDIO" "$MANIFEST"; then
+            sed -i 's#<application#<uses-permission android:name="android.permission.RECORD_AUDIO" />\n    <uses-permission android:name="android.permission.INTERNET" />\n\n    <application#' "$MANIFEST"
+          fi
+      - name: Боргирии модели AI (GGUF)
+        script: |
+          mkdir -p assets/models
+          if [ ! -f assets/models/model.gguf ]; then
+            curl -L -o assets/models/model.gguf "$MODEL_URL"
+          fi
       - name: Get Flutter packages
         script: |
           flutter pub get
