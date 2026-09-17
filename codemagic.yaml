@@ -15,6 +15,3 @@ workflows:
           flutter build apk --release
     artifacts:
       - build/**/outputs/**/*.apk
-    publishing:
-      email:
-        recipients: []
