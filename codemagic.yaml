@@ -6,15 +6,15 @@ workflows:
     environment:
       flutter: 3.19.6
     scripts:
-      - name: Unpack and Fix Dependencies
+      - name: Unpack and Prepare
         script: |
           unzip -o offline_ai_app-3.zip
           cd offline_ai_app
-          sed -i '' 's/fllama: \^0.6.0/fllama: any/g' pubspec.yaml
-          flutter pub get
+          flutter pub add fllama
       - name: Build Flutter APK
         script: |
           cd offline_ai_app
           flutter build apk --release --no-tree-shake-icons
     artifacts:
       - offline_ai_app/build/app/outputs/flutter-apk/*.apk
+
