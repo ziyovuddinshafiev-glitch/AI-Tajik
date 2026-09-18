@@ -37,3 +37,10 @@ workflows:
           flutter build apk --release --verbose 2>&1 | tail -n 200
     artifacts:
       - build/**/outputs/**/*.apk
+    publishing:
+      email:
+        recipients:
+          - ziyovuddinshafiev@gmail.com
+        notify:
+          success: true
+          failure: false
