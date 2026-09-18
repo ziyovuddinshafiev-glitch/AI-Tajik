@@ -21,7 +21,7 @@ workflows:
         script: |
           MANIFEST=android/app/src/main/AndroidManifest.xml
           if ! grep -q "RECORD_AUDIO" "$MANIFEST"; then
-            sed -i 's#<application#<uses-permission android:name="android.permission.RECORD_AUDIO" />\n    <uses-permission android:name="android.permission.INTERNET" />\n\n    <application#' "$MANIFEST"
+            perl -i -pe 's{<application}{<uses-permission android:name="android.permission.RECORD_AUDIO" />\n    <uses-permission android:name="android.permission.INTERNET" />\n\n    <application}' "$MANIFEST"
           fi
       - name: Боргирии модели AI (GGUF)
         script: |
