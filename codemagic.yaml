@@ -3,7 +3,7 @@ workflows:
     name: Android Build
     max_build_duration: 120
     environment:
-      flutter: stable
+      flutter: 3.24.5
       vars:
         MODEL_URL: "https://huggingface.co/bartowski/gemma-2-2b-it-GGUF/resolve/main/gemma-2-2b-it-Q4_K_M.gguf?download=true"
     scripts:
