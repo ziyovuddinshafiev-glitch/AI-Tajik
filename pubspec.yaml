@@ -1,0 +1,31 @@
+name: offline_ai_app
+description: "Барномаи чат-боти AI, ки бидуни интернет кор мекунад (офлайн)."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  fllama: ^0.6.0        # llama.cpp барои Flutter — AI-и офлайн
+  path_provider: ^2.1.2  # барои ёфтани роҳи файли модел дар дастгоҳ
+  shared_preferences: ^2.2.2  # барои нигоҳ доштани таърихи чат дар дастгоҳ
+  speech_to_text: ^6.6.0      # шинохти овоз -> матн (офлайн, аз забони насбшуда)
+  flutter_tts: ^4.0.2         # хондани матн бо овоз (офлайн)
+  google_mlkit_translation: ^0.11.0  # тарҷумаи офлайни забонҳо (ML Kit)
+  cupertino_icons: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  # МУҲИМ: Файли модел (GGUF) бояд дар ин ҷо гузошта шавад
+  # пеш аз билд кардани барнома. Ниг. README.md барои роҳнамо.
+  assets:
+    - assets/models/
